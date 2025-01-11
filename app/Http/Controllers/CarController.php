@@ -48,7 +48,7 @@ class CarController extends Controller
 
         // dd($fileName);
 
-        return redirect()->back()->with('succes', 'Mobil Berhasil ditambahkan');
+        return redirect()->back()->with('success', 'Mobil Berhasil ditambahkan');
     }
 
     public function delete($id) {
@@ -57,9 +57,9 @@ class CarController extends Controller
         if ($car) {
             $car->delete();
 
-            return redirect()->route('mobil')->with('message', 'Car deleted successfully');
+            return redirect()->route('mobil')->with('success', 'Car deleted successfully');
         }
 
-        return redirect()->route('mobil')->with('message', 'Car not found');
+        return redirect()->route('mobil')->with('error', 'Car not found');
     }
 }

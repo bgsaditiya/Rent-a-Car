@@ -57,6 +57,6 @@ class AdminController extends Controller
         $request->session()->regenerateToken();
 
         // Redirect ke halaman login admin
-        return redirect()->route('admin')->with('status', 'You have been logged out.');
+        return redirect()->route('admin')->with('success', 'You have been logged out.');
     }
 }

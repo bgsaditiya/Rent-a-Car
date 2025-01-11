@@ -7,6 +7,7 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RentalController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -14,7 +15,9 @@ use App\Http\Controllers\RegisterController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::inertia('/tentang-kami', 'Tentang');
-Route::inertia('/sewa', 'Sewa');
+
+Route::get('/sewa/{car_id}', [RentalController::class, 'index'])->middleware('auth');
+Route::post('/sewa', [RentalController::class, 'store'])->middleware('auth');
 
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
 Route::post('/login', [LoginController::class, 'login'])->middleware('guest');

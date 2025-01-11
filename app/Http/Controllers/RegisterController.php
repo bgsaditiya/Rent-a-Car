@@ -33,6 +33,6 @@ class RegisterController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        return redirect()->back()->with('succes', 'Akun berhasil dibuat');
+        return redirect()->back()->with('success', 'Akun berhasil dibuat');
     }
 }

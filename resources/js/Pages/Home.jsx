@@ -8,6 +8,8 @@ export default function Home({ cars }) {
     const [searchTersedia, setSearchTersedia] = useState("");
     // console.log(search);
 
+    const handleSewa = ({ car_id }) => {};
+
     const FormatNumber = ({ number }) => {
         const formattedNumber = new Intl.NumberFormat("id-ID").format(number);
 
@@ -58,7 +60,7 @@ export default function Home({ cars }) {
                         <select
                             onChange={(e) => setSearchTersedia(e.target.value)}
                             id="countries"
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 block w-full px-3 py-2"
+                            className="bg-white border border-slate-300 text-slate-400 text-sm rounded-md shadow-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 block w-full px-3 py-2"
                         >
                             <option value="">-Pilih ketersediaan-</option>
                             <option value="0">Tersedia</option>
@@ -100,7 +102,7 @@ export default function Home({ cars }) {
                                         alt="Brio"
                                     />
                                 </div>
-                                <div className="px-4 pt-2 pb-4">
+                                <div className="px-4 pt-2 pb-4 w-full">
                                     <h1 className="font-medium text-lg mb-6">
                                         {car.merk} {car.model}
                                     </h1>
@@ -119,12 +121,24 @@ export default function Home({ cars }) {
                                         </div>
                                         <FormatNumber number={car.harga} />
                                     </div>
-                                    <button
-                                        // onClick={() => handleDelete(car.id)}
-                                        className="py-2 px-4 rounded-md bg-red-500 text-white font-semibold w-full"
-                                    >
-                                        Sewa
-                                    </button>
+
+                                    {car.tersedia ? (
+                                        <a
+                                            href={`/sewa/${car.id}`}
+                                            className="py-2 text-center rounded-md bg-red-500 text-white font-semibold w-full block"
+                                            // onClick={() => handleDelete(car.id)}
+                                        >
+                                            Sewa
+                                        </a>
+                                    ) : (
+                                        <button
+                                            disabled
+                                            className="py-2 text-center rounded-md bg-slate-500 text-white font-semibold w-full"
+                                            // onClick={() => handleDelete(car.id)}
+                                        >
+                                            Mobil tidak tersedia
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         ))}

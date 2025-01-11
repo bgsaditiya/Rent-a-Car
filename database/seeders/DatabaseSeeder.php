@@ -28,6 +28,14 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
 
+        DB::table('users')->insert([
+            'nama' => 'bagas',
+            'alamat' => 'Jl. Sorogenen I',
+            'no_telp' => '0821',
+            'no_sim' => '3207',
+            'password' => Hash::make('password'),
+        ]);
+
         DB::table('cars')->insert([
             'merk' => 'Honda',
             'model' => 'Jazz',

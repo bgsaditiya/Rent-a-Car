@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('car_id')->constrained('cars')->onDelete('cascade'); // Relasi ke tabel cars
             $table->date('start_date'); // Tanggal mulai sewa
             $table->date('end_date'); // Tanggal selesai sewa
-            $table->integer('total_days')->nullable(); // Total hari sewa (dihitung saat pengembalian)
-            $table->decimal('total_price', 10, 2)->nullable(); // Total biaya sewa
+            $table->integer('total_hari')->nullable(); // Total hari sewa (dihitung saat pengembalian)
+            $table->integer('total_harga')->nullable(); // Total biaya sewa
             $table->timestamps(); // created_at & updated_at
         });
 
