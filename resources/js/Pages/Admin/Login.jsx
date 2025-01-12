@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePage, useForm } from "@inertiajs/react";
 
 export default function Login() {
@@ -9,7 +8,19 @@ export default function Login() {
     });
 
     const { props } = usePage();
-    const errorMessage = props.flash ? props.flash.error : null;
+    const [errorMessage, setErrorMessage] = useState("");
+
+    useEffect(() => {
+        if (props.flash?.error) {
+            setErrorMessage(props.flash.error); // Set error message dari props
+        } else {
+            setErrorMessage(""); // Kosongkan error message jika tidak ada error
+        }
+    }, [props.flash]);
+
+    function onClose() {
+        setErrorMessage("");
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -65,10 +76,6 @@ export default function Login() {
                                 {errors.password}
                             </p>
                         )}
-                        {errorMessage && (
-                            <p className="text-red-500 my-2">{errorMessage}</p>
-                        )}
-
                         <button
                             type="submit"
                             className="w-full py-2 px-4 rounded-lg bg-red-500 mt-4 text-white font-semibold"
@@ -77,6 +84,30 @@ export default function Login() {
                         </button>
                     </form>
                 </div>
+                {errorMessage && (
+                    <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
+                        <div className="relative bg-white rounded-lg shadow p-6">
+                            <div className="flex justify-between items-center border-b border-gray-300 pb-3">
+                                <h3 className="text-xl font-semibold text-gray-900">
+                                    Pemberitahuan
+                                </h3>
+                            </div>
+                            <div className="space-y-4 mt-4">
+                                <p className="text-base leading-relaxed text-gray-500">
+                                    {errorMessage}
+                                </p>
+                            </div>
+                            <div className="flex justify-end mt-4">
+                                <button
+                                    onClick={onClose}
+                                    className="py-2.5 px-5 text-sm font-medium text-white bg-red-500 border border-gray-200 rounded-lg hover:bg-red-400"
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </>
     );

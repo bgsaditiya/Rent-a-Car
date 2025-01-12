@@ -28,6 +28,7 @@ class RegisterController extends Controller
             'no_sim.required' => 'No SIM wajib diisi!',
             'password.required' => 'Password wajib diisi!',
             'password.confirmed' => 'Konfirmasi Password salah',
+            'password.min' => 'Password minimal 8 karakter!',
         ]);
 
         // dd($validated['nama']);

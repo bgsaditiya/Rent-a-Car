@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('car_id')->constrained('cars')->onDelete('cascade'); // Relasi ke tabel cars
             $table->foreignId('rental_id')->constrained('rentals')->onDelete('cascade'); // Relasi ke tabel rentals
             $table->date('return_date'); // Tanggal pengembalian
-            $table->decimal('total_price', 10, 2); // Total biaya sewa setelah pengembalian
+            $table->integer('total_harga'); // Total biaya sewa setelah pengembalian
             $table->timestamps(); // created_at & updated_at
         });
 

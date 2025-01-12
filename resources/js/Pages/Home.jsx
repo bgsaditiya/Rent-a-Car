@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
+import { usePage, useForm } from "@inertiajs/react";
 
 export default function Home({ cars }) {
     const [searchMerk, setSearchMerk] = useState("");
@@ -8,7 +9,20 @@ export default function Home({ cars }) {
     const [searchTersedia, setSearchTersedia] = useState("");
     // console.log(search);
 
-    const handleSewa = ({ car_id }) => {};
+    const { props } = usePage();
+    const [errorMessage, setErrorMessage] = useState("");
+
+    useEffect(() => {
+        if (props.flash?.error) {
+            setErrorMessage(props.flash.error); // Set error message dari props
+        } else {
+            setErrorMessage(""); // Kosongkan error message jika tidak ada error
+        }
+    }, [props.flash]);
+
+    function onClose() {
+        setErrorMessage("");
+    }
 
     const FormatNumber = ({ number }) => {
         const formattedNumber = new Intl.NumberFormat("id-ID").format(number);
@@ -143,6 +157,30 @@ export default function Home({ cars }) {
                             </div>
                         ))}
                 </div>
+                {errorMessage && (
+                    <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
+                        <div className="relative bg-white rounded-lg shadow p-6">
+                            <div className="flex justify-between items-center border-b border-gray-300 pb-3">
+                                <h3 className="text-xl font-semibold text-gray-900">
+                                    Pemberitahuan
+                                </h3>
+                            </div>
+                            <div className="space-y-4 mt-4">
+                                <p className="text-base leading-relaxed text-gray-500">
+                                    {errorMessage}
+                                </p>
+                            </div>
+                            <div className="flex justify-end mt-4">
+                                <button
+                                    onClick={onClose}
+                                    className="py-2.5 px-5 text-sm font-medium text-white bg-red-500 border border-gray-200 rounded-lg hover:bg-red-400"
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
             <Footer />
         </>

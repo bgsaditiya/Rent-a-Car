@@ -62,4 +62,34 @@ class CarController extends Controller
 
         return redirect()->route('mobil')->with('error', 'Car not found');
     }
+
+    public function apiCars(){
+        try {
+            // Ambil semua data mobil dari database
+            $cars = Car::all();
+
+            // Kembalikan data dalam format JSON
+            return response()->json([
+                'success' => true,
+                'data' => $cars,
+            ], 200);
+        } catch (\Exception $e) {
+            // Tangani error jika ada
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data mobil: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+    public function toggleTersedia(Request $request, Car $car) {
+        $validated = $request->validate([
+            'tersedia' => 'required|boolean',
+        ]);
+
+        $car->tersedia = $validated['tersedia'];
+        $car->save();
+
+        return response()->json(['message' => 'Status tersedia berhasil diperbarui.']);
+    }
+
 }

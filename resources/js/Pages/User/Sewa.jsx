@@ -20,10 +20,22 @@ export default function Sewa({ car, success }) {
         car_id: car.id,
     });
 
-    console.log(data.start_date);
+    // console.log(car);
 
     const { props } = usePage();
-    const errorMessage = props.flash ? props.flash.error : null;
+    const [errorMessage, setErrorMessage] = useState("");
+
+    useEffect(() => {
+        if (props.flash?.error) {
+            setErrorMessage(props.flash.error); // Set error message dari props
+        } else {
+            setErrorMessage(""); // Kosongkan error message jika tidak ada error
+        }
+    }, [props.flash]);
+
+    function onClose() {
+        setErrorMessage("");
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -44,6 +56,9 @@ export default function Sewa({ car, success }) {
                     </a>
                     <div className="flex flex-col w-full p-4 rounded-lg bg-white shadow">
                         <form onSubmit={handleSubmit}>
+                            <label className="mb-2 font-semibold text-slate-900 block">
+                                Tanggal mulai sewa
+                            </label>
                             <input
                                 value={data.start_date}
                                 onChange={(e) =>
@@ -58,12 +73,15 @@ export default function Sewa({ car, success }) {
                                     {errors.start_date}
                                 </p>
                             )}
+                            <label className="block mb-2 mt-4 font-semibold text-slate-900">
+                                Tanggal selesai sewa
+                            </label>
                             <input
                                 value={data.end_date}
                                 onChange={(e) =>
                                     setData("end_date", e.target.value)
                                 }
-                                className="border w-full p-2 rounded-md my-2"
+                                className="border w-full p-2 rounded-md"
                                 placeholder="Pilih Tanggal Akhir"
                                 type="date"
                             />
@@ -72,8 +90,11 @@ export default function Sewa({ car, success }) {
                                     {errors.end_date}
                                 </p>
                             )}
+                            <label className="block mb-2 mt-4 font-semibold text-slate-900">
+                                Mobil yang disewa
+                            </label>
                             <input
-                                className="border w-full p-2 rounded-md my-2"
+                                className="border w-full p-2 rounded-md text-slate-500"
                                 value={car.merk + " " + car.model}
                                 readOnly
                                 disabled
@@ -85,17 +106,36 @@ export default function Sewa({ car, success }) {
                             )}
                             <button
                                 type="submit"
-                                className="rounded-md bg-red-500 w-full py-2 text-center text-white font-semibold"
+                                className="mt-4 rounded-md bg-red-500 w-full py-2 text-center text-white font-semibold"
                             >
                                 Sewa
                             </button>
                         </form>
-                        {message && (
-                            <div className="bg-green-500 text-white p-4 rounded-lg mb-4">
-                                {message}
-                            </div>
-                        )}
                     </div>
+                    {errorMessage && (
+                        <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
+                            <div className="relative bg-white rounded-lg shadow p-6">
+                                <div className="flex justify-between items-center border-b border-gray-300 pb-3">
+                                    <h3 className="text-xl font-semibold text-gray-900">
+                                        Pemberitahuan
+                                    </h3>
+                                </div>
+                                <div className="space-y-4 mt-4">
+                                    <p className="text-base leading-relaxed text-gray-500">
+                                        {errorMessage}
+                                    </p>
+                                </div>
+                                <div className="flex justify-end mt-4">
+                                    <button
+                                        onClick={onClose}
+                                        className="py-2.5 px-5 text-sm font-medium text-white bg-red-500 border border-gray-200 rounded-lg hover:bg-red-400"
+                                    >
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
             <Footer />

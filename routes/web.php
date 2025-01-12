@@ -13,13 +13,18 @@ use App\Http\Controllers\RentalController;
 //     return view('welcome');
 // });
 
-Route::get('/', [HomeController::class, 'index']);
-Route::inertia('/tentang-kami', 'Tentang');
+Route::put('/api/cars/{car}/toggle', [CarController::class, 'toggleTersedia']);
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::inertia('/tentang-kami', 'Tentang')->middleware('guest');
 
 Route::get('/sewa/{car_id}', [RentalController::class, 'index'])->middleware('auth');
 Route::post('/sewa', [RentalController::class, 'store'])->middleware('auth');
 
-Route::get('/list-sewa', [RentalController::class, 'list'])->middleware('auth');
+Route::get('/kembalikan/{rental_id}', [RentalController::class, 'return'])->middleware('auth');
+Route::post('/kembalikan', [RentalController::class, 'handleReturn'])->middleware('auth');
+
+Route::get('/list-sewa', [RentalController::class, 'list'])->middleware('auth')->name('list.sewa');
 
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
 Route::post('/login', [LoginController::class, 'login'])->middleware('guest');
