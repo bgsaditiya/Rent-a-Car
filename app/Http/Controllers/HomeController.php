@@ -11,9 +11,7 @@ class HomeController extends Controller
     //
     public function index (){
         $cars = Car::all();
-        // dd($cars);
 
-        // return redirect()->route('mobil', ['cars', 'Bagas']);
         return Inertia::render('Home', [
             'cars' => $cars
           ]);

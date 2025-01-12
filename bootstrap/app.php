@@ -22,7 +22,6 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->alias([
-        //     'password.protect' => PasswordProtect::class,
             'admin.auth' => AdminAuthMiddleware::class,
             'guest' => RedirectIfAuthenticated::class,
             'auth' => Authenticated::class,

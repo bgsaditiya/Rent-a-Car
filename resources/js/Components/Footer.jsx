@@ -87,7 +87,6 @@ export default function Footer() {
                             </a>
                         </div>
                     </div>
-                    <div>{/* TODO */}</div>
                 </div>
                 <hr className="my-4 bg-slate-300 w-full h-[2px]" />
                 <p className="text-slate-400 text-xs text-center">

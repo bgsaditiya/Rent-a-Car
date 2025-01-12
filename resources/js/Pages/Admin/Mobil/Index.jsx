@@ -12,7 +12,6 @@ export default function Index({ cars }) {
 
     const handleDelete = (carId) => {
         if (window.confirm("Are you sure you want to delete this car?")) {
-            // destroy`/cars/${carId}`;
             destroy(`/admin/dashboard/mobil/hapus/${carId}`);
             fetchCars();
         }
@@ -53,7 +52,7 @@ export default function Index({ cars }) {
         try {
             const response = await axios.get("/api/cars");
             const dt = response.data;
-            setMobil(dt.data); // Asumsikan `setMobil` adalah state updater untuk daftar mobil
+            setMobil(dt.data);
         } catch (error) {
             console.error("Gagal memuat data mobil:", error);
         }
@@ -99,9 +98,6 @@ export default function Index({ cars }) {
                     </h1>
                 </div>
                 <div className="flex flex-col mt-4 md:mt-4 items-center">
-                    {/* <p className="text-red-500 text-lg font-medium">
-                        Cari Mobil
-                    </p> */}
                     <div className="flex gap-2">
                         <input
                             onChange={(e) =>
@@ -119,12 +115,6 @@ export default function Index({ cars }) {
                             placeholder="Cari model apa?"
                             className="block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                         />
-                        {/* <label
-                            for="countries"
-                            className="block text-sm font-medium text-gray-900 dark:text-white"
-                        >
-                            Select an option
-                        </label> */}
                         <select
                             onChange={(e) => setSearchTersedia(e.target.value)}
                             id="countries"
@@ -192,7 +182,6 @@ export default function Index({ cars }) {
                                     </div>
                                     <div className="grid grid-cols-2 gap-2">
                                         <button
-                                            // onClick={() => handleDelete(car.id)}
                                             onClick={() =>
                                                 handleToggleTersedia(
                                                     car.id,

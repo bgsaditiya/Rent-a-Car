@@ -48,7 +48,5 @@ class RegisterController extends Controller
             // Jika gagal
             return redirect()->back()->with('error', 'Gagal membuat akun. Coba lagi.');
         }
-
-        // return redirect()->back()->with('success', 'Akun berhasil dibuat');
     }
 }

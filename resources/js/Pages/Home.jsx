@@ -45,9 +45,6 @@ export default function Home({ cars }) {
                     />
                 </div>
                 <div className="flex flex-col mt-4 md:mt-4 items-center">
-                    {/* <p className="text-red-500 text-lg font-medium">
-                        Cari Mobil
-                    </p> */}
                     <div className="flex gap-2">
                         <input
                             onChange={(e) =>
@@ -65,12 +62,6 @@ export default function Home({ cars }) {
                             placeholder="Cari model apa?"
                             className="block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                         />
-                        {/* <label
-                            for="countries"
-                            className="block text-sm font-medium text-gray-900 dark:text-white"
-                        >
-                            Select an option
-                        </label> */}
                         <select
                             onChange={(e) => setSearchTersedia(e.target.value)}
                             id="countries"
@@ -109,9 +100,9 @@ export default function Home({ cars }) {
                                 key={car.id}
                                 className="rounded-md overflow-hidden shadow bg-white"
                             >
-                                <div className="w-full aspect-square">
+                                <div className="w-full">
                                     <img
-                                        className="w-full h-full object-cover"
+                                        className="w-full aspect-square object-cover"
                                         src={"/images/" + car.foto}
                                         alt="Brio"
                                     />
@@ -140,7 +131,6 @@ export default function Home({ cars }) {
                                         <a
                                             href={`/sewa/${car.id}`}
                                             className="py-2 text-center rounded-md bg-red-500 text-white font-semibold w-full block"
-                                            // onClick={() => handleDelete(car.id)}
                                         >
                                             Sewa
                                         </a>
@@ -148,7 +138,6 @@ export default function Home({ cars }) {
                                         <button
                                             disabled
                                             className="py-2 text-center rounded-md bg-slate-500 text-white font-semibold w-full"
-                                            // onClick={() => handleDelete(car.id)}
                                         >
                                             Mobil tidak tersedia
                                         </button>

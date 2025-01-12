@@ -23,7 +23,6 @@ export default function Login() {
     }
 
     function handleSubmit(e) {
-        // console.log(data.nama);
         e.preventDefault();
         post("/login");
     }

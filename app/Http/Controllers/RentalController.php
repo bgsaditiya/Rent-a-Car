@@ -23,7 +23,6 @@ class RentalController extends Controller
     }
 
     public function list() {
-        // $listSewa = Rental::where('user_id',Auth::id())->get();
 
         $listSewa = Rental::with('car') // Relasi ke model mobil
         ->where('user_id', Auth::id())
@@ -32,8 +31,6 @@ class RentalController extends Controller
         $listReturn = Retur::with(['car','rental']) // Relasi ke model mobil
         ->where('user_id', Auth::id())
         ->get();
-
-        // dd($listSewa);
 
         // Mengirim data mobil ke halaman sewa
         return Inertia::render('User/ListSewa', [
@@ -56,7 +53,6 @@ class RentalController extends Controller
 
     public function store(Request $request) {
 
-        // dd($request->car_id);
         $validated = $request->validate([
             'start_date' => 'required|date',
             'end_date' => 'required|date',
@@ -67,7 +63,6 @@ class RentalController extends Controller
         $startDate = $validated['start_date'];
         $endDate = $validated['end_date'];
 
-        // dd(Car::find($validated['car_id']));
 
         if ($this->checkAvailability($carId, $startDate, $endDate)) {
             Rental::create([
@@ -77,7 +72,6 @@ class RentalController extends Controller
                 'end_date' => $validated['end_date'],
             ]);
 
-            $car = Car::find($validated['car_id']);
             return redirect()->route('home')->with('error', 'Berhasil menyewa mobil.');
         } else {
             return redirect()->back()->with('error', 'Mobil tidak tersedia pada tanggal yang dipilih.');
@@ -101,7 +95,6 @@ class RentalController extends Controller
     }
 
     public function return($rental_id) {
-        // $rent = Rental::find($rental_id);
 
         $rent = Rental::with('car') // Relasi ke model mobil
         ->where('id', $rental_id)->where('total_harga', null)
@@ -115,12 +108,9 @@ class RentalController extends Controller
             return redirect()->route('list.sewa')->with('error', 'Gagal, Mobil sudah dikembalikan.');
         }
 
-        // Mengirim data rental ke halaman
-
     }
 
     public function handleReturn(Request $request) {
-        // $rent = Rental::find($rental_id);
 
         $validated = $request->validate([
             'no_plat' => 'required|string',
@@ -128,7 +118,7 @@ class RentalController extends Controller
             'rental_id' => 'required',
         ]);
 
-        $rental = Rental::with('car') // Relasi ke model mobil
+        $rental = Rental::with('car')
         ->where('id', $validated['rental_id'])
         ->first();
 
@@ -139,8 +129,6 @@ class RentalController extends Controller
 
 
         $totalHarga = intval($totalHari) * $rental->car->harga;
-
-        // dd(Carbon::now('Asia/Jakarta')->toDateString());
 
         if ($rental && strtolower($validated['no_plat']) == strtolower($rental->car->no_plat)) {
             $rental->total_hari = intval($totalHari);
@@ -157,7 +145,6 @@ class RentalController extends Controller
 
             return redirect()->route('list.sewa')->with('error', 'Berhasil mengembalikan mobil.');
         } else {
-            // dd('gagal');
             return redirect()->back()->with('error', 'Gagal, nomor plat salah.');
         }
 

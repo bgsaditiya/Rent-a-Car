@@ -10,10 +10,6 @@ export default function Kembalikan({ rental }) {
         rental_id: rental.id,
     });
 
-    // console.log(rental[0].id);
-
-    // console.log(errorMessage);
-    // const errorMessage = props.flash ? props.flash.error : null;
     const { props } = usePage();
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -33,7 +29,6 @@ export default function Kembalikan({ rental }) {
         e.preventDefault();
         post("/kembalikan");
         setData("no_plat", "");
-        // setData("end_date", "");
     }
     return (
         <>

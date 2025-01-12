@@ -26,10 +26,7 @@ export default function Daftar() {
         setErrorMessage("");
     }
 
-    // const succesMessage = props.flash ? props.flash.succes : null;
-
     function handleSubmit(e) {
-        // console.log(data.nama);
         e.preventDefault();
         post("/register");
         setData("password", "");

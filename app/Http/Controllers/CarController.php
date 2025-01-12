@@ -3,18 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\Car;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
 
 class CarController extends Controller
 {
     //
     public function index (){
         $cars = Car::all();
-        // dd($cars);
 
-        // return redirect()->route('mobil', ['cars', 'Bagas']);
         return Inertia::render('Admin/Mobil/Index', [
             'cars' => $cars
           ]);
@@ -43,14 +41,6 @@ class CarController extends Controller
             $fileName = 'nophoto.jpg';
         }
 
-        // DB::table('cars')->insert([
-        //     'merk'=>$request->merk,
-        //     'model'=>$request->model,
-        //     'foto'=>$fileName,
-        //     'no_plat'=>strtoupper($request->no_plat),
-        //     'harga' => $request->harga,
-        // ]);
-
         $car = Car::create([
             'merk'=>$request->merk,
             'model'=>$request->model,
@@ -64,14 +54,20 @@ class CarController extends Controller
         }else{
             return redirect()->back()->with('error', 'Mobil gagal ditambahkan!');
         }
-
-        // dd($fileName);
-
-        // return redirect()->back()->with('success', 'Mobil Berhasil ditambahkan');
     }
 
     public function delete($id) {
         $car = Car::find($id);
+
+        // dd($car->foto);
+
+        if ($car->foto !== 'nophoto.jpg'){
+            $filePath = 'images/' . $car->foto;
+            if (Storage::disk('public')->exists($filePath)) {
+                Storage::disk('public')->delete($filePath);
+            }
+        }
+
 
         if ($car) {
             $car->delete();

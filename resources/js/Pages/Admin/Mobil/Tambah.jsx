@@ -25,18 +25,6 @@ export default function Tambah() {
         setErrorMessage("");
     }
 
-    useEffect(() => {
-        if (props.flash?.error) {
-            setErrorMessage(props.flash.error); // Set error message dari props
-        } else {
-            setErrorMessage(""); // Kosongkan error message jika tidak ada error
-        }
-    }, [props.flash]);
-
-    function onClose() {
-        setErrorMessage("");
-    }
-
     function handleSubmit(e) {
         e.preventDefault();
         post("/admin/dashboard/mobil/tambah");
