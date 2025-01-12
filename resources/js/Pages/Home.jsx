@@ -30,10 +30,10 @@ export default function Home({ cars }) {
                         alt="Image Poster"
                     />
                 </div>
-                <div className="flex justify-between mt-4 md:mt-4 items-center">
-                    <p className="text-red-500 text-lg font-medium">
+                <div className="flex flex-col mt-4 md:mt-4 items-center">
+                    {/* <p className="text-red-500 text-lg font-medium">
                         Cari Mobil
-                    </p>
+                    </p> */}
                     <div className="flex gap-2">
                         <input
                             onChange={(e) =>
@@ -93,7 +93,7 @@ export default function Home({ cars }) {
                         .map((car) => (
                             <div
                                 key={car.id}
-                                className="rounded-md overflow-hidden shadow"
+                                className="rounded-md overflow-hidden shadow bg-white"
                             >
                                 <div className="w-full aspect-square">
                                     <img

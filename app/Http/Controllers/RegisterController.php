@@ -11,21 +11,28 @@ class RegisterController extends Controller
 {
     //
     public function index(){
-        return Inertia::render('User/Daftar');
+        return Inertia::render('User/Register');
     }
 
     public function register(Request $request){
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
-            'alamat' => 'required|string',
-            'no_telp' => 'required|numeric|unique:users',
+            'alamat' => 'required|string|max:255',
+            'no_telp' => 'required|string|unique:users',
             'no_sim' => 'required|string',
             'password' => 'required|string|min:8|confirmed',
+        ],[
+            'nama.required' => 'Nama wajib diisi!',
+            'alamat.required' => 'Alamat wajib diisi!',
+            'no_telp.required' => 'No Telepon wajib diisi!',
+            'no_sim.required' => 'No SIM wajib diisi!',
+            'password.required' => 'Password wajib diisi!',
+            'password.confirmed' => 'Konfirmasi Password salah',
         ]);
 
         // dd($validated['nama']);
 
-        User::create([
+        $user = User::create([
             'nama' => $validated['nama'],
             'alamat' => $validated['alamat'],
             'no_telp' => $validated['no_telp'],
@@ -33,6 +40,14 @@ class RegisterController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        return redirect()->back()->with('success', 'Akun berhasil dibuat');
+        if ($user) {
+            // Jika berhasil
+            return redirect()->back()->with('error', 'Akun berhasil dibuat.');
+        } else {
+            // Jika gagal
+            return redirect()->back()->with('error', 'Gagal membuat akun. Coba lagi.');
+        }
+
+        // return redirect()->back()->with('success', 'Akun berhasil dibuat');
     }
 }

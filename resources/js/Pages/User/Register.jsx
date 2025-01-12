@@ -11,10 +11,21 @@ export default function Daftar() {
         password_confirmation: "",
     });
 
+    const { props } = usePage();
+    const errorMessage = props.flash ? props.flash.error : null;
+
+    // const succesMessage = props.flash ? props.flash.succes : null;
+
     function handleSubmit(e) {
         // console.log(data.nama);
         e.preventDefault();
-        post("/daftar");
+        post("/register");
+        setData("nama", "");
+        setData("alamat", "");
+        setData("no_telp", "");
+        setData("no_sim", "");
+        setData("password", "");
+        setData("password_confirmation", "");
     }
     return (
         <>
@@ -40,6 +51,9 @@ export default function Daftar() {
                             value={data.nama}
                             onChange={(e) => setData("nama", e.target.value)}
                         />
+                        {errors.nama && (
+                            <p className="text-red-500 my-2">{errors.nama}</p>
+                        )}
                         <label className="font-semibold text-slate-900">
                             Alamat
                         </label>
@@ -49,6 +63,9 @@ export default function Daftar() {
                             value={data.alamat}
                             onChange={(e) => setData("alamat", e.target.value)}
                         />
+                        {errors.alamat && (
+                            <p className="text-red-500 my-2">{errors.alamat}</p>
+                        )}
                         <label className="mb-3 font-semibold text-slate-900">
                             Nomor Telepon
                         </label>
@@ -58,7 +75,11 @@ export default function Daftar() {
                             value={data.no_telp}
                             onChange={(e) => setData("no_telp", e.target.value)}
                         />
-
+                        {errors.no_telp && (
+                            <p className="text-red-500 my-2">
+                                {errors.no_telp}
+                            </p>
+                        )}
                         <label className="mb-3 font-semibold text-slate-900">
                             Nomor SIM A
                         </label>
@@ -68,7 +89,9 @@ export default function Daftar() {
                             value={data.no_sim}
                             onChange={(e) => setData("no_sim", e.target.value)}
                         />
-
+                        {errors.no_sim && (
+                            <p className="text-red-500 my-2">{errors.no_sim}</p>
+                        )}
                         <label className="font-semibold text-slate-900">
                             Password
                         </label>
@@ -80,6 +103,7 @@ export default function Daftar() {
                                 setData("password", e.target.value)
                             }
                         />
+
                         <label className="font-semibold text-slate-900">
                             Konfirmasi Password
                         </label>
@@ -91,6 +115,19 @@ export default function Daftar() {
                                 setData("password_confirmation", e.target.value)
                             }
                         />
+                        {errors.password && (
+                            <p className="text-red-500 my-2">
+                                {errors.password}
+                            </p>
+                        )}
+                        {errorMessage && (
+                            <p className="text-red-500 my-2">{errorMessage}</p>
+                        )}
+                        {/* {succesMessage && (
+                            <p className="text-green-500 my-2">
+                                {succesMessage}
+                            </p>
+                        )} */}
                         <p className="mt-2 text-sm self-end">
                             Sudah punya akun?{" "}
                             <a

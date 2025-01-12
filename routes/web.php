@@ -19,11 +19,13 @@ Route::inertia('/tentang-kami', 'Tentang');
 Route::get('/sewa/{car_id}', [RentalController::class, 'index'])->middleware('auth');
 Route::post('/sewa', [RentalController::class, 'store'])->middleware('auth');
 
+Route::get('/list-sewa', [RentalController::class, 'list'])->middleware('auth');
+
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
 Route::post('/login', [LoginController::class, 'login'])->middleware('guest');
 Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth');
-Route::get('/daftar', [RegisterController::class, 'index'])->middleware('guest');
-Route::post('/daftar', [RegisterController::class, 'register'])->middleware('guest');
+Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
+Route::post('/register', [RegisterController::class, 'register'])->middleware('guest');
 
 // Route::get('/admin', function () {
 //     return Inertia::render('Admin');

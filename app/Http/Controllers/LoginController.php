@@ -26,7 +26,7 @@ class LoginController extends Controller
         ]);
 
         // Mencari admin berdasarkan username
-        $user = User::where('no_telp', $request->no_telp)->get();
+        // $user = User::where('no_telp', $request->no_telp)->get();
 
 
         if (Auth::attempt($request->only('no_telp', 'password'))) {
@@ -38,7 +38,7 @@ class LoginController extends Controller
         // Auth::loginUsingId($user->id);
 
         // Redirect ke halaman admin (home)
-        return redirect()->back()->with('error', 'Login Gagal');
+        return redirect()->back()->with('error', 'Username atau Password salah!');
     }
 
     public function logout(Request $request) {

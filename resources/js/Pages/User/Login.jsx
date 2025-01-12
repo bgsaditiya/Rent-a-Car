@@ -7,6 +7,9 @@ export default function Login() {
         password: "",
     });
 
+    const { props } = usePage();
+    const errorMessage = props.flash ? props.flash.error : null;
+
     function handleSubmit(e) {
         // console.log(data.nama);
         e.preventDefault();
@@ -27,10 +30,7 @@ export default function Login() {
                         onSubmit={handleSubmit}
                         className="flex flex-col mt-4"
                     >
-                        <label
-                            className="mb-3 font-semibold text-slate-900"
-                            for="fname"
-                        >
+                        <label className="mb-3 font-semibold text-slate-900">
                             Nomor Telepon
                         </label>
                         <input
@@ -41,10 +41,12 @@ export default function Login() {
                             autoFocus
                             required
                         />
-                        <label
-                            className="font-semibold text-slate-900"
-                            for="lname"
-                        >
+                        {errors.no_telp && (
+                            <p className="text-red-500 my-2">
+                                {errors.no_telp}
+                            </p>
+                        )}
+                        <label className="font-semibold text-slate-900">
                             Password
                         </label>
                         <input
@@ -56,10 +58,18 @@ export default function Login() {
                             }
                             required
                         />
+                        {errors.password && (
+                            <p className="text-red-500 my-2">
+                                {errors.password}
+                            </p>
+                        )}
+                        {errorMessage && (
+                            <p className="text-red-500 my-2">{errorMessage}</p>
+                        )}
                         <p className="mt-2 text-sm self-end">
                             Belum punya akun?{" "}
                             <a
-                                href="/daftar"
+                                href="/register"
                                 className="text-blue-500 hover:underline"
                             >
                                 Daftar!

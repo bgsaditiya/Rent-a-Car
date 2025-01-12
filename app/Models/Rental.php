@@ -23,4 +23,14 @@ class Rental extends Model
         'total_hari',
         'total_harga',
     ];
+
+    public function car()
+    {
+        return $this->belongsTo(Car::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
