@@ -26,7 +26,7 @@ export default function Dashboard() {
                         Kelola Mobil
                     </a>
                     <a
-                        href="#"
+                        href="/admin/dashboard/list-sewa"
                         className="flex items-center justify-center w-full h-auto py-2 rounded-md bg-red-500 text-white text-center mx-auto font-semibold"
                     >
                         Lihat Mobil yang Disewa

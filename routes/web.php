@@ -13,8 +13,6 @@ use App\Http\Controllers\RentalController;
 //     return view('welcome');
 // });
 
-Route::put('/api/cars/{car}/toggle', [CarController::class, 'toggleTersedia']);
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::inertia('/tentang-kami', 'Tentang')->middleware('guest');
 
@@ -37,10 +35,13 @@ Route::post('/register', [RegisterController::class, 'register'])->middleware('g
 // })->name('admin');
 
 Route::get('/admin/dashboard/mobil', [CarController::class, 'index'])->middleware('admin.auth')->name('mobil');
+Route::put('/api/cars/{car}/toggle', [CarController::class, 'toggleTersedia'])->middleware('admin.auth');
 
 Route::get('/admin/dashboard/mobil/tambah', action: function () {
     return Inertia::render('Admin/Mobil/Tambah');
 })->middleware('admin.auth');
+
+Route::get('/admin/dashboard/list-sewa', [RentalController::class, 'listAdmin'])->middleware('admin.auth');
 
 Route::post('/admin/dashboard/mobil/tambah', [CarController::class, 'store'])->middleware('admin.auth');
 Route::delete('/admin/dashboard/mobil/hapus/{id}', [CarController::class, 'delete'])->middleware('admin.auth');

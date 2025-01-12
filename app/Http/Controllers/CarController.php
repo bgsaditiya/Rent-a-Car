@@ -27,6 +27,11 @@ class CarController extends Controller
             'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
             'no_plat' => 'required|string|unique:cars|max:255',
             'harga' => 'required|numeric|min:0',
+        ],[
+            'merk.required' => 'Merk wajib diisi!',
+            'model.required' => 'Model wajib diisi!',
+            'no_plat.required' => 'Nomor Plat wajib diisi!',
+            'harga.required' => 'Harga wajib diisi!',
         ]);
 
         if(!empty($request->foto)){
@@ -38,17 +43,31 @@ class CarController extends Controller
             $fileName = 'nophoto.jpg';
         }
 
-        DB::table('cars')->insert([
+        // DB::table('cars')->insert([
+        //     'merk'=>$request->merk,
+        //     'model'=>$request->model,
+        //     'foto'=>$fileName,
+        //     'no_plat'=>strtoupper($request->no_plat),
+        //     'harga' => $request->harga,
+        // ]);
+
+        $car = Car::create([
             'merk'=>$request->merk,
             'model'=>$request->model,
             'foto'=>$fileName,
-            'no_plat'=>$request->no_plat,
+            'no_plat'=>strtoupper($request->no_plat),
             'harga' => $request->harga,
         ]);
 
+        if($car){
+            return redirect()->route('mobil')->with('error', 'Mobil berhasil ditambahkan!');
+        }else{
+            return redirect()->back()->with('error', 'Mobil gagal ditambahkan!');
+        }
+
         // dd($fileName);
 
-        return redirect()->back()->with('success', 'Mobil Berhasil ditambahkan');
+        // return redirect()->back()->with('success', 'Mobil Berhasil ditambahkan');
     }
 
     public function delete($id) {
@@ -66,7 +85,7 @@ class CarController extends Controller
     public function apiCars(){
         try {
             // Ambil semua data mobil dari database
-            $cars = Car::all();
+            $cars = Car::orderBy('id', 'desc')->get();
 
             // Kembalikan data dalam format JSON
             return response()->json([

@@ -4,7 +4,7 @@ import { usePage, useForm } from "@inertiajs/react";
 import axios from "axios";
 
 export default function Index({ cars }) {
-    // const { delete: destroy } = useForm();
+    const { delete: destroy } = useForm();
 
     const [searchMerk, setSearchMerk] = useState("");
     const [searchModel, setSearchModel] = useState("");
@@ -14,6 +14,7 @@ export default function Index({ cars }) {
         if (window.confirm("Are you sure you want to delete this car?")) {
             // destroy`/cars/${carId}`;
             destroy(`/admin/dashboard/mobil/hapus/${carId}`);
+            fetchCars();
         }
     };
 
@@ -26,6 +27,21 @@ export default function Index({ cars }) {
             </div>
         );
     };
+
+    const { props } = usePage();
+    const [errorMessage, setErrorMessage] = useState("");
+
+    useEffect(() => {
+        if (props.flash?.error) {
+            setErrorMessage(props.flash.error); // Set error message dari props
+        } else {
+            setErrorMessage(""); // Kosongkan error message jika tidak ada error
+        }
+    }, [props.flash]);
+
+    function onClose() {
+        setErrorMessage("");
+    }
 
     const [mobil, setMobil] = useState([]);
 
@@ -55,9 +71,6 @@ export default function Index({ cars }) {
             console.error("Gagal memperbarui status mobil:", error);
         }
     };
-
-    console.log(mobil);
-    console.log(cars);
 
     return (
         <>
@@ -201,6 +214,30 @@ export default function Index({ cars }) {
                             </div>
                         ))}
                 </div>
+                {errorMessage && (
+                    <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
+                        <div className="relative bg-white rounded-lg shadow p-6">
+                            <div className="flex justify-between items-center border-b border-gray-300 pb-3">
+                                <h3 className="text-xl font-semibold text-gray-900">
+                                    Pemberitahuan
+                                </h3>
+                            </div>
+                            <div className="space-y-4 mt-4">
+                                <p className="text-base leading-relaxed text-gray-500">
+                                    {errorMessage}
+                                </p>
+                            </div>
+                            <div className="flex justify-end mt-4">
+                                <button
+                                    onClick={onClose}
+                                    className="py-2.5 px-5 text-sm font-medium text-white bg-red-500 border border-gray-200 rounded-lg hover:bg-red-400"
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </>
     );

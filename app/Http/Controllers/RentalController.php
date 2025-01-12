@@ -41,6 +41,18 @@ class RentalController extends Controller
             'listReturn' => $listReturn,
         ]);
     }
+    public function listAdmin() {
+
+        $listSewa = Rental::with(['user', 'car'])->whereNull('total_harga')->get();
+
+        $listReturn = Retur::with(['user', 'car', 'rental'])->get();
+
+        // Mengirim data mobil ke halaman sewa
+        return Inertia::render('Admin/Mobil/ListSewa', [
+            'listSewa' => $listSewa,
+            'listReturn' => $listReturn,
+        ]);
+    }
 
     public function store(Request $request) {
 
